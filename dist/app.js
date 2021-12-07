@@ -4,7 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const server_1 = __importDefault(require("./server"));
-server_1.default.listen(80, () => {
-    console.log(`Server on port : ${4000}`);
+const appps = new server_1.default();
+appps.app.listen(4000, () => {
+    console.log('server on port');
 });
 //# sourceMappingURL=app.js.map

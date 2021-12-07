@@ -1,5 +1,7 @@
-import app from './server'
+import app from './server';
 
-app.listen(80,()=>{
-    console.log(`Server on port : ${4000}`);
-})
+ const appps = new app()
+
+ appps.app.listen(4000,()=>{
+     console.log('server on port');
+ })
