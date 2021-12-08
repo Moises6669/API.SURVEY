@@ -8,12 +8,13 @@ const morgan_1 = __importDefault(require("morgan"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
-// const Server = express();
+const main_1 = require("./routes/main");
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
         this.setConfigure();
         this.setMongoConfig();
+        this.routes();
     }
     setConfigure() {
         this.app.use((0, morgan_1.default)("dev"));
@@ -25,6 +26,9 @@ class Server {
     setMongoConfig() {
         mongoose_1.default.Promise = global.Promise;
         mongoose_1.default.connect("mongodb://localhost/survey").then((db) => { console.log('data base connect'); });
+    }
+    routes() {
+        new main_1.MainRoutes().createUse;
     }
 }
 exports.default = Server;

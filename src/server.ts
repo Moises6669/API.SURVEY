@@ -4,8 +4,8 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
+import {MainRoutes} from './routes/main';
 
-// const Server = express();
 class Server {
     public app: Application;
 
@@ -13,6 +13,7 @@ class Server {
         this.app = express();
         this.setConfigure();
         this.setMongoConfig();
+        this.routes();
     }
 
     private setConfigure() {
@@ -26,6 +27,10 @@ class Server {
     private setMongoConfig() {
         mongoose.Promise = global.Promise;
         mongoose.connect("mongodb://localhost/survey").then((db) => { console.log('data base connect'); })
+    }
+
+    private routes(){
+        new MainRoutes().createUse;
     }
 }
 
