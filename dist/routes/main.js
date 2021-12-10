@@ -9,7 +9,12 @@ class MainRoutes {
         this.createUse();
     }
     createUse() {
-        this.route.post('/api/createuser', new create_user_1.UserController().newUser);
+        this.route.post('/createuser', new create_user_1.UserController().newUser);
+    }
+    get() {
+        this.route.get("/user"), (req, res) => {
+            res.send("hello");
+        };
     }
 }
 exports.MainRoutes = MainRoutes;

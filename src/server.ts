@@ -3,8 +3,9 @@ import { Application } from 'express';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import express from 'express';
-import mongoose from 'mongoose';
-import {MainRoutes} from './routes/main';
+import mongoose, { ConnectOptions } from 'mongoose';
+import { MainRoutes } from './routes/main';
+import config from './config/config';
 
 class Server {
     public app: Application;
@@ -21,16 +22,30 @@ class Server {
         this.app.use(cors());
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
+        this.app.use('/api',this.routes)
         dotenv.config();
     }
-
     private setMongoConfig() {
-        mongoose.Promise = global.Promise;
-        mongoose.connect("mongodb://localhost/survey").then((db) => { console.log('data base connect'); })
+        mongoose.connect(config.DB.URI,this.mongoOptions);
+        const connection = mongoose.connection;
+        connection.once('open', () => { console.log('mongodb connection stablished') });
+        connection.on('error', err => {
+            console.error(err);
+            process.exit(0);
+        })
     }
 
-    private routes(){
-        new MainRoutes().createUse;
+    private mongoOptions() {
+        const options: ConnectOptions = {
+            useNewUrlParser: true,
+            useCreateIndex: true,
+            useUnifiedTopology: true,
+        }
+        return options;
+    }
+
+    private routes() {
+       return new MainRoutes().get();
     }
 }
 
