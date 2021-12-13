@@ -8,12 +8,14 @@ const morgan_1 = __importDefault(require("morgan"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
-// const Server = express();
+const main_user_1 = require("./controllers/user/main.user");
+const config_1 = __importDefault(require("./config/config"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
         this.setConfigure();
         this.setMongoConfig();
+        this.setControllers();
     }
     setConfigure() {
         this.app.use((0, morgan_1.default)("dev"));
@@ -23,8 +25,23 @@ class Server {
         dotenv_1.default.config();
     }
     setMongoConfig() {
-        mongoose_1.default.Promise = global.Promise;
-        mongoose_1.default.connect("mongodb://localhost/survey").then((db) => { console.log('data base connect'); });
+        const options = {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        };
+        mongoose_1.default.connect(config_1.default.DB.URI, options);
+        const connection = mongoose_1.default.connection;
+        connection.once("open", () => {
+            console.log("mongodb connection stablished");
+        });
+        connection.on("error", (err) => {
+            console.error(err);
+            process.exit(0);
+        });
+    }
+    setControllers() {
+        const user = new main_user_1.UserController();
+        this.app.use("/api", user.router);
     }
 }
 exports.default = Server;
