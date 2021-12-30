@@ -9,6 +9,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const main_user_1 = require("./controllers/user/main.user");
+const user_service_1 = require("./services/user/user.service");
 const config_1 = __importDefault(require("./config/config"));
 class Server {
     constructor() {
@@ -40,7 +41,7 @@ class Server {
         });
     }
     setControllers() {
-        const user = new main_user_1.UserController();
+        const user = new main_user_1.UserController(new user_service_1.UserServices());
         this.app.use("/api", user.router);
     }
 }

@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import express from "express";
 import mongoose, { ConnectOptions } from "mongoose";
 import { UserController } from "./controllers/user/main.user";
+import { UserServices } from "./services/user/user.service";
 import config from "./config/config";
 
 class Server {
@@ -32,7 +33,7 @@ class Server {
     mongoose.connect(config.DB.URI, options);
     const connection = mongoose.connection;
     connection.once("open", () => {
-      console.log("mongodb connection stablished");
+      return "mongodb connection stablished";
     });
     connection.on("error", (err) => {
       console.error(err);
@@ -41,7 +42,7 @@ class Server {
   }
 
   private setControllers() {
-    const user = new UserController();
+    const user = new UserController(new UserServices());
     this.app.use("/api", user.router);
   }
 }
