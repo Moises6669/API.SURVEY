@@ -18,8 +18,11 @@ export class UserController {
 
   private createUser = async (req: Request, res: Response) => {
     try {
-       const user = await this.userSservice.createUser(req.body);
-       res.status(201).send(user)
+      const user = await this.userSservice.createUser(req.body);
+      res.status(201).json({
+        ok: true,
+        user,
+      });
     } catch (error) {
       res.json({ error });
     }

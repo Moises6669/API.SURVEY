@@ -31,7 +31,9 @@ class Server {
       useUnifiedTopology: true,
     };
     mongoose.connect(config.DB.URI, options);
+
     const connection = mongoose.connection;
+
     connection.once("open", () => {
       return "mongodb connection stablished";
     });
@@ -39,6 +41,11 @@ class Server {
       console.error(err);
       process.exit(0);
     });
+    // if (process.env.NODE_ENV === "test") {
+    //   mongoose.connection.close(function () {
+    //     console.log("Mongoose connection disconnected");
+    //   });
+    // }
   }
 
   private setControllers() {
@@ -47,4 +54,4 @@ class Server {
   }
 }
 
-export default Server;
+export default new Server().app;

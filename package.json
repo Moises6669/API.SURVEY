@@ -5,16 +5,18 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently \"tsc -w\" \"nodemon dist/app.js\"",
-    "test": "jest"
+    "test": "jest --forceExit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",
+    "@types/mongodb-memory-server": "^2.3.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "mongodb-memory-server": "^8.1.0",
     "mongoose": "^5.11.15",
     "ts-jest": "^27.1.2"
   },

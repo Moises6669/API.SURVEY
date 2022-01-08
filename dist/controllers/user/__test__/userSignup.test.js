@@ -14,10 +14,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("../../../app"));
 const supertest_1 = __importDefault(require("supertest"));
-describe("GET /api/hello ", () => {
-    test("return on message hello", () => __awaiter(void 0, void 0, void 0, function* () {
-        const message = yield (0, supertest_1.default)(app_1.default.app).get('/api/hello').send();
-        expect(message.statusCode).toBe(200);
+const Builder = {
+    user: ({ username = "my product", email = "this is a test", password = "100", role = "admin", } = {}) => ({
+        username,
+        email,
+        password,
+        role,
+    }),
+};
+// Promise.all(mongoose.connections.map(con => con.close()))
+describe("POST /api/user", () => {
+    test("new user registration", () => __awaiter(void 0, void 0, void 0, function* () {
+        const user = Builder.user();
+        const response = yield (0, supertest_1.default)(app_1.default)
+            .post("/api/user")
+            .send(user)
+            .set("Accept", "application/json")
+            .expect("Content-type", /json/)
+            .expect(200);
+        expect(response.body).toEqual(Object.assign(Object.assign({}, user), { _id: "abc" }));
     }));
 });
 //# sourceMappingURL=userSignup.test.js.map

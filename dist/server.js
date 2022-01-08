@@ -39,11 +39,16 @@ class Server {
             console.error(err);
             process.exit(0);
         });
+        // if (process.env.NODE_ENV === "test") {
+        //   mongoose.connection.close(function () {
+        //     console.log("Mongoose connection disconnected");
+        //   });
+        // }
     }
     setControllers() {
         const user = new main_user_1.UserController(new user_service_1.UserServices());
         this.app.use("/api", user.router);
     }
 }
-exports.default = Server;
+exports.default = new Server().app;
 //# sourceMappingURL=server.js.map

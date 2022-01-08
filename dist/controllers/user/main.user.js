@@ -21,7 +21,10 @@ class UserController {
         this.createUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const user = yield this.userSservice.createUser(req.body);
-                res.status(201).send(user);
+                res.status(201).json({
+                    ok: true,
+                    user,
+                });
             }
             catch (error) {
                 res.json({ error });
