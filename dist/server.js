@@ -33,7 +33,7 @@ class Server {
         mongoose_1.default.connect(config_1.default.DB.URI, options);
         const connection = mongoose_1.default.connection;
         connection.once("open", () => {
-            console.log("mongodb connection stablished");
+            return "mongodb connection stablished";
         });
         connection.on("error", (err) => {
             console.error(err);
