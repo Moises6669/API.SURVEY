@@ -4,7 +4,7 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import express from "express";
 import mongoose, { ConnectOptions } from "mongoose";
-import { UserController } from "./controllers/user/main.user";
+import routes from './controllers/user/main.user'
 import config from "./config/config";
 
 class Server {
@@ -30,9 +30,11 @@ class Server {
       useUnifiedTopology: true,
     };
     mongoose.connect(config.DB.URI, options);
+
     const connection = mongoose.connection;
+
     connection.once("open", () => {
-      console.log("mongodb connection stablished");
+      return "mongodb connection stablished";
     });
     connection.on("error", (err) => {
       console.error(err);
@@ -40,10 +42,9 @@ class Server {
     });
   }
 
-  private setControllers() {
-    const user = new UserController();
-    this.app.use("/api", user.router);
+  private setControllers() {;
+    this.app.use("/api", routes);
   }
 }
 
-export default Server;
+export default new Server().app;
