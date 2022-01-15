@@ -4,8 +4,7 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import express from "express";
 import mongoose, { ConnectOptions } from "mongoose";
-import { UserController } from "./controllers/user/main.user";
-import { UserServices } from "./services/user/user.service";
+import routes from './controllers/user/main.user'
 import config from "./config/config";
 
 class Server {
@@ -41,16 +40,10 @@ class Server {
       console.error(err);
       process.exit(0);
     });
-    // if (process.env.NODE_ENV === "test") {
-    //   mongoose.connection.close(function () {
-    //     console.log("Mongoose connection disconnected");
-    //   });
-    // }
   }
 
-  private setControllers() {
-    const user = new UserController(new UserServices());
-    this.app.use("/api", user.router);
+  private setControllers() {;
+    this.app.use("/api", routes);
   }
 }
 
