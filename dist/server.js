@@ -8,7 +8,7 @@ const morgan_1 = __importDefault(require("morgan"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
-const main_user_1 = require("./controllers/user/main.user");
+const main_user_1 = __importDefault(require("./controllers/user/main.user"));
 const config_1 = __importDefault(require("./config/config"));
 class Server {
     constructor() {
@@ -32,7 +32,7 @@ class Server {
         mongoose_1.default.connect(config_1.default.DB.URI, options);
         const connection = mongoose_1.default.connection;
         connection.once("open", () => {
-            console.log("mongodb connection stablished");
+            return "mongodb connection stablished";
         });
         connection.on("error", (err) => {
             console.error(err);
@@ -40,9 +40,9 @@ class Server {
         });
     }
     setControllers() {
-        const user = new main_user_1.UserController();
-        this.app.use("/api", user.router);
+        ;
+        this.app.use("/api", main_user_1.default);
     }
 }
-exports.default = Server;
+exports.default = new Server().app;
 //# sourceMappingURL=server.js.map

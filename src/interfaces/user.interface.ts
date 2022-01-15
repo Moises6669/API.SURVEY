@@ -1,7 +1,8 @@
 import {Document} from 'mongoose';
 
 export interface IUser extends Document {
-    username:string,
-    email:string,
-    password:string,
+    username: string,
+    email: string,
+    password: string;
+    comparePasswords(candidatePassword: string, next: (err: Error | null, same: boolean | null) => void): void;
 };

@@ -1,24 +1,7 @@
-import { Request, Response, Router } from "express";
-import { UserServices } from "../../services/user/user.service";
+import { Router } from "express";
+import {signup} from './signup';
+const routes = Router();
 
-export class UserController {
-  public router = Router();
+routes.post('/newuser',signup);
 
-  /**
-   *
-   */
-  constructor() {
-    this.setRoutes();
-  }
-
-  public setRoutes() {
-    this.router.route("/hello").get(this.sayHello);
-  }
-
-  private sayHello = (req: Request, res: Response) => {
-    try {
-      res.json("hello");
-      console.log("hola");
-    } catch (error) {}
-  };
-}
+export default routes;
