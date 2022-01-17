@@ -10,6 +10,7 @@ const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const main_user_1 = __importDefault(require("./controllers/user/main.user"));
 const config_1 = __importDefault(require("./config/config"));
+const messages_1 = require("./common/messages");
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -19,10 +20,20 @@ class Server {
     }
     setConfigure() {
         this.app.use((0, morgan_1.default)("dev"));
-        this.app.use((0, cors_1.default)());
+        this.app.use((0, cors_1.default)({
+            origin: '*'
+        }));
         this.app.use(express_1.default.json());
         this.app.use(express_1.default.urlencoded({ extended: true }));
         dotenv_1.default.config();
+        this.app.use((request, response, next) => {
+            try {
+                decodeURIComponent(request.path);
+            }
+            catch (error) {
+                response.json({ message: messages_1.consortium.welcome });
+            }
+        });
     }
     setMongoConfig() {
         const options = {
