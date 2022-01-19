@@ -1,7 +1,45 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.contentTypes = exports.application = exports.variables = exports.environments = void 0;
+exports.contentTypes = exports.application = exports.variables = exports.environments = exports.log = void 0;
 // logs configuration
+exports.log = {
+    colors: {
+        error: 'brightRed',
+        warn: 'brightYellow',
+        info: 'brightCyan',
+        verbose: 'brightWhite',
+        debug: 'brightBlue',
+        silly: 'brightMagenta'
+    },
+    filename: 'debug.log',
+    // priority => 0: highest 7: lowest
+    levels: {
+        emergency: {
+            value: 'emerg', priority: 0
+        },
+        alert: {
+            value: 'alert', priority: 1
+        },
+        critical: {
+            value: 'crit', priority: 2
+        },
+        error: {
+            value: 'error', priority: 3
+        },
+        warning: {
+            value: 'warning', priority: 4
+        },
+        notice: {
+            value: 'notice', priority: 5
+        },
+        info: {
+            value: 'info', priority: 6
+        },
+        debug: {
+            value: 'debug', priority: 7
+        }
+    }
+};
 // environment names
 exports.environments = {
     production: 'production',
@@ -15,7 +53,7 @@ exports.variables = {
     LOG_LEVEL: { name: 'LOG_LEVEL', value: 'debug' },
     NODE_ENV: { name: 'NODE_ENV', value: 'development' },
     DB_NAME: { name: 'DB_NAME', value: 'survey' },
-    DB_URL: { name: 'DB_URL', value: 'localhost' },
+    DB_URL: { name: 'DB_URL', value: 'mongodb://localhost/survey' },
     DB_PORT: { name: 'DB_PORT', value: '27017' },
     DB_USERNAME: { name: 'DB_USERNAME', value: '' },
     DB_PASSWORD: { name: 'DB_PASSWORD', value: '' },
