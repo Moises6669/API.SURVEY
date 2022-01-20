@@ -1,17 +1,18 @@
 import { Request, Response } from "express";
-import { User } from "../../models/user";
+import { User } from "../../models/schemas/user";
 import { IUser } from "../../interfaces/user.interface";
+import {codes} from '../../utils/response';
 
 export const signup = async (req: Request, res: Response) => {
-  let body: IUser = req.body;
   try {
+    let body = req.body;
     const newUser = await User.create(body);
-    res.status(201).json({
+    res.status(codes.success).json({
       ok: true,
       newUser,
     });
   } catch (error) {
-    res.status(401).json({
+    res.status(codes.bad_request).json({
       ok: false,
       error,
     });
