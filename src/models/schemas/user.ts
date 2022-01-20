@@ -1,10 +1,10 @@
 import { Schema, model } from "mongoose";
 
-import { IUser } from "../interfaces/user.interface";
+import { IUser } from "../../interfaces/user.interface";
 
 import bcrypt from "bcryptjs";
 
-const salt: number = 12;
+let salt: number = 12;
 
 const Userschema: Schema<IUser> = new Schema(
   {
@@ -20,16 +20,30 @@ const Userschema: Schema<IUser> = new Schema(
   }
 );
 
-Userschema.pre("save", async function (this: IUser, next : (err ?: Error | undefined) => void) {
-  if (!this.isModified('password')) {
-    return next();
-  }
-    
-    bcrypt.hash(this.password, salt, (err: Error, hash: string) => {
+Userschema.pre("save", function (next) {
+  let user = this;
+
+  if (user.isModified("password")) {
+    bcrypt.genSalt(salt, function (err, salt) {
+      if (err) return next(err);
+
+      bcrypt.hash(user.password, salt, function (err, hash) {
         if (err) return next(err);
-        this.password = hash;
+        user.password = hash;
+        next();
+      });
     });
+  } else {
+    next();
+  }
 });
+
+Userschema.methods.toJSON = function () {
+  let user = this;
+  let userObject = user.toObject();
+  delete userObject.password;
+  return userObject;
+};
 
 Userschema.methods.comparePasswords = function (
   candidatePassword: string,
