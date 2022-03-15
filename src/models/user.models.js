@@ -15,7 +15,7 @@ const ValidRols = {
 
 const User = new Schema(
   {
-    name: {
+    username: {
       type: String,
     },
     email: {

@@ -36,7 +36,7 @@ const getTemplate = (name, token) => {
       <h2 style="margin-left: 82px;">Hola ${name} Somos Soft-Lore</h2>
       <p style="margin-left: 92px;">Necesitamos validar tu dirección de email</p>
       <div style="margin-left: 100px; margin-top: 20px; width: 200px; background-color: #90be6d; padding: 10px; border-radius: 10px; text-align: center" class="buttom">
-          <a style="text-decoration: none; color: white; text-transform: uppercase;" href="http://localhost:4000/api/confirm_email/${token}">Confirmar cuenta</a>
+          <a style="text-decoration: none; color: white; text-transform: uppercase;" href="http://localhost:4000/api/confifrEmail/${token}">Confirmar cuenta</a>
       </div>
       </div>
     `;
