@@ -33,7 +33,7 @@ const User = new Schema(
       default: false,
     },
     facebook: {
-      type: Boolean,
+      type: String,
       default: false,
     },
     verify: {
