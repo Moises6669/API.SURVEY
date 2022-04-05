@@ -25,6 +25,7 @@ app.use(cors());
 app.use(passport.initialize());
 //routes
 app.use("/api", require("./controllers/API/routes/user"));
+app.use("/api", require("./controllers/API/routes/survey"));
 
 //exports Test
 module.exports = app;
