@@ -26,7 +26,11 @@ const SurveySchema = new Schema({
       value: String,
       required: false,
       rate: { type: Number, default: 0, }
-    }]
+    }],
+    answers: {
+      type: Array,
+      required: false
+    }
   }],
   answered_by: {
     type: Schema.Types.ObjectId,
