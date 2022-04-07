@@ -1,28 +1,23 @@
 const jwt = require("jsonwebtoken");
 
-class Token {
-  constructor(token) {
-    this.tokenData = token;
+verifyToken = (token) => {
+  let data;
+
+  if (token) {
+    throw new Error("Se necesita el Token");
   }
-  verifyToken = () => {
-    let data;
 
-    if (!this.tokenData) {
-      throw new Error("Se necesita el Token");
+  jwt.verify(token, "secreta", (err, decode) => {
+    if (err) {
+      throw new Error("Token no valido");
     }
+    data = decode.user;
+  });
+  return data;
+};
+generateToken = (user, expires = "1d") => {
+  const newToken = jwt.sign({ user }, "secreta", { expiresIn: expires });
+  return newToken;
+};
 
-    jwt.verify(this.tokenData, "secreta", (err, decode) => {
-      if (err) {
-        throw new Error("Token no valido");
-      }
-      data = decode.user;
-    });
-    return data;
-  };
-  generateToken = (user, expires = "1d") => {
-    const token = jwt.sign({ user }, "secreta", { expiresIn: expires });
-    return token;
-  };
-}
-
-module.exports = { Token };
+module.exports = { verifyToken, generateToken };

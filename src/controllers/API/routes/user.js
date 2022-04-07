@@ -1,13 +1,14 @@
 const express = require("express");
 const routes = express.Router();
 const passport = require("passport");
-const jwt = require("jsonwebtoken");
+
 //Controllers
 const { signup } = require("../user/signup");
 const { login } = require("../user/login");
 const { oauthGoogle } = require("../user/Google");
 const { confirmEmail } = require("../user/confirEmail");
 const { facebook } = require("../user/Facebook");
+
 //Middlewares
 const {
   user_singup_validate,
@@ -16,9 +17,17 @@ const {
   usernameValidate,
 } = require("../../../middlewares/auth");
 
+const { uploads } = require("../../../middlewares/img.upload");
+
 routes.post(
   "/signup",
-  [user_singup_validate(), message_Validate, usernameValidate, emailValidate],
+  [
+    uploads.single("img"),
+    user_singup_validate(),
+    message_Validate,
+    usernameValidate,
+    emailValidate,
+  ],
   signup
 );
 
@@ -33,7 +42,7 @@ routes.get("/auth/facebook", passport.authenticate("facebook"));
 routes.get(
   "/auth/facebook/secrets",
   passport.authenticate("facebook", {
-    successRedirect: "/",
+    successRedirect: "/api/home",
     failureRedirect: "/fail",
   })
 );
@@ -42,7 +51,10 @@ routes.get("/fail", (req, res) => {
   res.send("Failed attempt");
 });
 
-routes.get("/", (req, res) => {
-  res.send("Success");
+routes.get("/home", (req, res) => {
+  res.json({
+    ok: true,
+    message: "success",
+  });
 });
 module.exports = routes;

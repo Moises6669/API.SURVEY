@@ -1,9 +1,9 @@
 const User = require("../../../models/user.models");
-const { Token } = require("../../../services/Tokens");
+const { generateToken, verifyToken } = require("../../../services/Tokens");
 const bcryptjs = require("bcryptjs");
 const login = async (req, res) => {
   const { email, password } = req.body;
-  
+
   if (!(email && password)) {
     return res.status(400).json({
       ok: false,
@@ -29,7 +29,7 @@ const login = async (req, res) => {
       message: "Contraseña incorrecta",
     });
   }
-  const token = new Token().generateToken(userFind);
+  const token = generateToken(userFind);
 
   return res.status(201).json({
     ok: true,

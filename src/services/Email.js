@@ -12,22 +12,13 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendEmail = async (email, subject, html) => {
-  try {
-    await transporter.sendMail({
-      from: "Confirmacion de Correo Electronico",
-      to: email,
-      subject,
-      text: "Ingrese al Link para confirmar su cuenta",
-      html,
-    });
-  } catch (error) {
-    console.log(error);
-    return res.json({
-      ok: false,
-      message: "Algo no va bien con el email",
-      error,
-    });
-  }
+  await transporter.sendMail({
+    from: "Confirmacion de Correo Electronico",
+    to: email,
+    subject,
+    text: "Ingrese al Link para confirmar su cuenta",
+    html,
+  });
 };
 const getTemplate = (name, token) => {
   return `     

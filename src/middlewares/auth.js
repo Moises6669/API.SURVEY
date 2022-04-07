@@ -1,6 +1,6 @@
 const { validationResult, body } = require("express-validator");
 const User = require("../models/user.models");
-
+const fs = require("fs-extra");
 const user_singup_validate = () => {
   return [
     body("username")
@@ -73,6 +73,7 @@ const usernameValidate = (req, res, next) => {
   const username = req.body.username;
   User.findOne({ username }, (err, data) => {
     if (data) {
+      fs.unlinkSync(req.file.path);
       res.status(400).json({
         ok: false,
         message: "Lo sentimos este nombre de usuario ya esta en uso",
@@ -87,6 +88,7 @@ const emailValidate = (req, res, next) => {
   const email = req.body.email;
   User.findOne({ email }, (err, data) => {
     if (data) {
+      fs.unlinkSync(req.file.path);
       res.status(400).json({
         ok: false,
         message: "Lo sentimos este email ya esta en uso",
@@ -104,8 +106,11 @@ const message_Validate = (req, res, next) => {
 
   let errors;
 
-  error.array().map((Err) => {
+  fs.unlinkSync(req.file.path);
+
+  error.array().map((Err) => {2
     errors = JSON.stringify(Err.msg);
+    console.log(Err);
   });
 
   return res.status(422).json({
