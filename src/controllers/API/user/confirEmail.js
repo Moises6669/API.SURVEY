@@ -3,7 +3,6 @@ const { Token } = require("../../../services/Tokens");
 
 const confirmEmail = async (req, res) => {
   let token = req.params.token;
-  console.log('adasd')
   let userData = new Token(token).verifyToken();
   const user = await User.findOne({ email: userData.email });
 
