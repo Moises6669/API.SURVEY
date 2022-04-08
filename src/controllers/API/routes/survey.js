@@ -5,7 +5,9 @@ const { postSurvey } = require('../survey/createSurvey')
 const { getAllSurveys, getOneSurveys, getAllSurveysByUser } = require('../survey/getSurveys')
 const { answerSurvey } = require('../survey/answerSurvey')
 
-routes.post("/survey/create", postSurvey);
+const { uploads } = require("../../../middlewares/img.upload");
+
+routes.post("/survey/create", uploads.single("img"), postSurvey);
 routes.post("/survey/answer/:id", answerSurvey);
 routes.get("/surveys", getAllSurveys);
 routes.get("/surveys/:id", getOneSurveys);
