@@ -26,14 +26,14 @@ const signup = async (req, res) => {
     sendEmail(user.email, "Confirme su Email", template);
 
     await user.save();
-    
-    //Delete images of the server  
+
+    //Delete images of the server
     fs.unlinkSync(req.file.path);
 
     res.status(201).json({
+      ok: true,
       message: "Confirme su email",
     });
-    
   } catch (error) {
     return res.json(400).json({
       ok: false,

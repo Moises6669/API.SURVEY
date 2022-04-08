@@ -15,6 +15,9 @@ verifyToken = (token) => {
   });
   return data;
 };
-generateToken = (user, expires = "1d") => {jwt.sign({ user }, "secreta", { expiresIn: expires })};
+generateToken = (user, expires = "1d") => {
+  const newToken = jwt.sign({ user }, "secreta", { expiresIn: expires });
+  return newToken;
+};
 
 module.exports = { verifyToken, generateToken };

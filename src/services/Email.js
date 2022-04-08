@@ -6,19 +6,23 @@ const transporter = nodemailer.createTransport({
   secure: true,
 
   auth: {
-    user: "loquenderolax13@gmail.com",
-    pass: "nvuvwleulaamluef",
+    user: "soft132lore@gmail.com",
+    pass: "qgyuxvynyaprmghd",
   },
 });
 
 const sendEmail = async (email, subject, html) => {
-  await transporter.sendMail({
-    from: "Confirmacion de Correo Electronico",
-    to: email,
-    subject,
-    text: "Ingrese al Link para confirmar su cuenta",
-    html,
-  });
+  try {
+    await transporter.sendMail({
+      from: "Confirmacion de Correo Electronico",
+      to: email,
+      subject,
+      text: "Ingrese al Link para confirmar su cuenta",
+      html,
+    });
+  } catch (error) {
+    console.log(error)
+  }
 };
 const getTemplate = (name, token) => {
   return `     
