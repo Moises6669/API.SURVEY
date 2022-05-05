@@ -2,7 +2,7 @@
   "name": "api.survey",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "app.js",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.29.0",
