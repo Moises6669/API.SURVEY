@@ -1,7 +1,7 @@
-const { getTemplate, sendEmail } = require("../../../services/Email");
-const { uploadProfileImage } = require("../../../services/Cloudinary");
-const { generateToken } = require("../../../services/Tokens");
-const User = require("../../../models/user.models");
+const { getTemplate, sendEmail } = require("../../../../services/Email");
+const { uploadProfileImage } = require("../../../../services/Cloudinary");
+const { generateToken } = require("../../../../services/Tokens");
+const User = require("../../../../models/user.models");
 const fs = require("fs-extra");
 
 const signup = async (req, res) => {

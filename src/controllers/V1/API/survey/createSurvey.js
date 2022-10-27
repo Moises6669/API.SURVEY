@@ -1,7 +1,7 @@
-const surveyModel = require("../../../models/survey.models");
-const userModel = require("../../../models/user.models");
-const { getQuestions } = require("../../../utils/functions/createSurvey");
-const { uploadProfileImage } = require("../../../services/Cloudinary");
+const surveyModel = require("../../../../models/survey.models");
+const userModel = require("../../../../models/user.models");
+const { getQuestions } = require("../../../../utils/functions/createSurvey");
+const { uploadProfileImage } = require("../../../../services/Cloudinary");
 const fs = require("fs-extra");
 
 const postSurvey = async (req, res) => {

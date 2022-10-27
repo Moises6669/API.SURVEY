@@ -1,5 +1,5 @@
-const User = require("../../../models/user.models");
-const { Token } = require("../../../services/Tokens");
+const User = require("../../../../models/user.models");
+const { Token } = require("../../../../services/Tokens");
 
 const confirmEmail = async (req, res) => {
   let token = req.params.token;

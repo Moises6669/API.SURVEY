@@ -15,9 +15,9 @@ const {
   message_Validate,
   emailValidate,
   usernameValidate,
-} = require("../../../middlewares/auth");
+} = require("../../../../middlewares/auth");
 
-const { uploads } = require("../../../middlewares/img.upload");
+const { uploads } = require("../../../../middlewares/img.upload");
 
 routes.post(
   "/signup",

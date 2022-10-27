@@ -1,4 +1,4 @@
-const surveyModel = require("../../../models/survey.models");
+const surveyModel = require("../../../../models/survey.models");
 
 exports.answerSurvey = (req, res) => {
   let id_poll = req.params.id;

@@ -24,8 +24,8 @@ app.use(cookieParser());
 app.use(cors());
 app.use(passport.initialize());
 //routes
-app.use("/api", require("./controllers/API/routes/user"));
-app.use("/api", require("./controllers/API/routes/survey"));
+app.use("/api", require("./controllers/V1/API/routes/user"));
+app.use("/api", require("./controllers/V1/API/routes/survey"));
 
 //exports Test
 module.exports = app;
