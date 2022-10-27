@@ -1,4 +1,4 @@
-const surveyModel = require("../../../models/survey.models");
+const surveyModel = require("../../../../models/survey.models");
 
 exports.getAllSurveys = (req,res) => {
     surveyModel.find({}, (err, surveys) => {

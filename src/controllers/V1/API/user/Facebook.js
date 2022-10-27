@@ -1,4 +1,4 @@
-const User = require("../../../models/user.models");
+const User = require("../../../../models/user.models");
 const FacebookStrategy = require("passport-facebook").Strategy;
 const passport = require("passport");
 
