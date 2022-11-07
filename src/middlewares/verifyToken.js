@@ -5,9 +5,7 @@ const ExtractJWT = require("passport-jwt").ExtractJwt;
 passport.use(
   new JWTstrategy(
     {
-      //secreto que solíamos firmar nuestro JWT
       secretOrKey: "top_secret",
-      //esperamos que el usuario envíe el token como un parámetro de consulta con el nombre 'secret_token'
       jwtFromRequest: ExtractJWT.fromUrlQueryParameter("secret_token"),
     },
     (token, done) => {

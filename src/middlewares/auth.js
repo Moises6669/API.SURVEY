@@ -1,6 +1,7 @@
 const { validationResult, body } = require("express-validator");
 const User = require("../models/user.models");
 const fs = require("fs-extra");
+
 const user_singup_validate = () => {
   return [
     body("username")
@@ -18,28 +19,7 @@ const user_singup_validate = () => {
       .notEmpty()
       .withMessage("la contraseña es requerida")
       .isLength({ min: 8 })
-      .withMessage("La contraseña debe tener almenos 8 caracteres")
-      .matches(/^(?=.*[0-9])(?=.*[!@#$%^&*.])[a-zA-Z0-9!@#$%^&*.]{6,16}$/)
-      .withMessage("Su contraseña es muy vulnerable")
-      .custom((value) => {
-        let palabras = [
-          "12345678",
-          "admin12345",
-          "admin12345678",
-          "12345admin",
-          "password",
-          "12345password",
-          "1234568contraseña",
-          "contraseña",
-        ];
-
-        palabras.forEach((element) => {
-          if (value === element) {
-            throw new Error("La contraseña debe ser mas segura");
-          }
-        });
-        return true;
-      }),
+      .withMessage("La contraseña debe tener almenos 8 caracteres"),
     body("passwordConfirmation")
       .notEmpty()
       .withMessage("La confirmacion de contraseña es requerida")
@@ -58,11 +38,7 @@ let auth = (req, res, next) => {
   let token = req.cookies.auth;
   User.findByToken(token, (err, user) => {
     if (err) throw err;
-    if (!user)
-      return res.json({
-        error: true,
-      });
-
+    if (!user) return res.json({ error: true });
     req.token = token;
     req.user = user;
     next();
@@ -108,7 +84,7 @@ const message_Validate = (req, res, next) => {
 
   fs.unlinkSync(req.file.path);
 
-  error.array().map((Err) => {2
+  error.array().map((Err) => {
     errors = JSON.stringify(Err.msg);
     console.log(Err);
   });
