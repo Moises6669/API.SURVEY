@@ -74,34 +74,6 @@ User.pre("save", function (next) {
   }
 });
 
-User.methods.comparepassword = function (password, cb) {
-  bcrypjs.compare(password, this.password, function (err, isMatch) {
-    if (err) return cb(next);
-    cb(null, isMatch);
-  });
-};
-
-User.methods.generateToken = function (cb) {
-  var user = this;
-  var token = jwt.sign(
-    {
-      _id: user._id.toHexString(),
-      name: user.name,
-      email: user.email,
-      verify: user.verify,
-    },
-    process.env.SECRET
-  );
-
-  user.token = token;
-
-  user.save(function (err, user) {
-    if (err) return cb(err);
-    cb(null, user);
-  });
-};
-
-// find by token
 User.statics.findByToken = function (token, cb) {
   var user = this;
 
@@ -111,15 +83,6 @@ User.statics.findByToken = function (token, cb) {
 
       cb(null, users);
     });
-  });
-};
-
-User.methods.deleteToken = function (token, cb) {
-  var user = this;
-
-  user.update({ $unset: { token: 1 } }, function (err, user) {
-    if (err) return cb(err);
-    cb(null, user);
   });
 };
 
