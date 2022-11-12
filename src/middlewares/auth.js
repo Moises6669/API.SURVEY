@@ -2,7 +2,7 @@ const { validationResult, body } = require("express-validator");
 const User = require("../models/user.models");
 const fs = require("fs-extra");
 
-const user_singup_validate = () => {
+const userSingupValidate = () => {
   return [
     body("username")
       .notEmpty()
@@ -75,7 +75,7 @@ const emailValidate = (req, res, next) => {
   });
 };
 
-const message_Validate = (req, res, next) => {
+const messageValidate = (req, res, next) => {
   const error = validationResult(req);
 
   if (error.isEmpty()) return next();
@@ -97,8 +97,8 @@ const message_Validate = (req, res, next) => {
 
 module.exports = {
   auth,
-  user_singup_validate,
-  message_Validate,
+  userSingupValidate,
+  messageValidate,
   usernameValidate,
   emailValidate,
 };

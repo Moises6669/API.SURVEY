@@ -8,56 +8,43 @@ const postSurvey = async (req, res) => {
   const { description, title, privacity, created_by, questions } = req.body;
   const image = req.file.path;
 
-  if (description && title && privacity && created_by && questions && image) {
-    try {
-      let survey = new surveyModel();
-      const imageSurvey = await uploadProfileImage(image);
-      
-      survey.title = title;
-      survey.privacity = privacity;
-      survey.created_by = created_by;
-      survey.description = description;
-      survey.img = imageSurvey;
-      
-      fs.unlinkSync(req.file.path);
+  try {
+    let survey = new surveyModel();
+    const imageSurvey = await uploadProfileImage(image);
 
-      userModel.findOne({ _id: survey.created_by }, (error, userDB) => {
-        if (userDB && !error) {
-          survey.author = userDB.username;
-          survey.questions = getQuestions(questions);
+    survey.title = title;
+    survey.privacity = privacity;
+    survey.created_by = created_by;
+    survey.description = description;
+    survey.img = imageSurvey;
 
-          survey.save((err, surveyStored) => {
-            if (err)
-              return res.status(500).json({
-                message:
-                  "Ha ocurrido un error al almacenar su encuesta en la base de datos",
-                err,
-              });
+    fs.unlinkSync(req.file.path);
 
-            return res.status(200).json({
-              ok: true,
-              message: "Encuesta creada satisfactoriamente",
-              _id: `${surveyStored._id}`,
-              user: userDB.name,
-            });
-          });
-        } else {
-          return res.status(403).json({
-            ok: false,
-            msg: "El usuario con el que intenta crear la encuesta no existe",
-          });
-        }
-      });
-    } catch (error) {
+    const author = await userModel.findOne({ _id: survey.created_by });
+
+    if (!author) {
       return res.status(403).json({
         ok: false,
-        msg: "oh! ha ocurrido un error",
+        msg: "El usuario con el que intenta crear la encuesta no existe",
       });
     }
-  } else {
-    return res.status(403).json({
+
+    survey.author = author.username;
+    survey.questions = getQuestions(questions);
+
+    await survey.save();
+
+    return res.status(200).json({
+      ok: true,
+      message: "Encuesta creada satisfactoriamente",
+      _id: `${survey._id}`,
+      user: survey.name,
+    });
+
+  } catch (error) {
+    return res.status(500).json({
       ok: false,
-      msg: "Favor, revise sus campos, no se permiten campos vacios",
+      msg: "oh! ha ocurrido un error al crear la encuesta",
     });
   }
 };
