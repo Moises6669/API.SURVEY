@@ -5,14 +5,14 @@ const passport = require("passport");
 //Controllers
 const { signup } = require("../user/signup");
 const { login } = require("../user/login");
-const { oauthGoogle } = require("../user/Google");
+const { oauthGoogle } = require("../user/google");
 const { confirmEmail } = require("../user/confirEmail");
-const { facebook } = require("../user/Facebook");
+const { facebook } = require("../user/facebook");
 
 //Middlewares
 const {
-  user_singup_validate,
-  message_Validate,
+  userSingupValidate,
+  messageValidate,
   emailValidate,
   usernameValidate,
 } = require("../../../../middlewares/auth");
@@ -23,8 +23,8 @@ routes.post(
   "/signup",
   [
     uploads.single("img"),
-    user_singup_validate(),
-    message_Validate,
+    userSingupValidate(),
+    messageValidate,
     usernameValidate,
     emailValidate,
   ],
