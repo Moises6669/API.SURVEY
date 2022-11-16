@@ -28,6 +28,17 @@ const validateImage = (req, res, next) => {
   next();
 };
 
+const validateQuestions = (req, res, next) => {
+  const questions = req.body.questions;
+  if (!questions) {
+    return res.status(403).json({
+      ok: false,
+      msg: "Pregunta requerida",
+    });
+  }
+  next();
+};
+
 const messageValidate = (req, res, next) => {
   const error = validationResult(req);
   if (error.isEmpty()) return next();
@@ -51,4 +62,5 @@ module.exports = {
   surveyValidate,
   messageValidate,
   validateImage,
+  validateQuestions,
 };
