@@ -17,11 +17,18 @@ const {
   messageValidate,
   surveyValidate,
   validateImage,
+  validateQuestions,
 } = require("../../../../middlewares/survey.validation");
 
 routes.post(
   "/survey/create",
-  [uploads.single("image"), surveyValidate(), messageValidate, validateImage],
+  [
+    uploads.single("image"),
+    surveyValidate(),
+    messageValidate,
+    validateImage,
+    validateQuestions,
+  ],
   postSurvey
 );
 routes.post("/survey/answer/:id", answerSurvey);
