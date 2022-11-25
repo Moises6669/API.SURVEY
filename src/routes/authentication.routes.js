@@ -1,23 +1,19 @@
 const express = require("express");
-const routes = express.Router();
 const passport = require("passport");
+const routes = express.Router();
 
-//Controllers
-const { signup } = require("../user/signup");
-const { login } = require("../user/login");
-const { oauthGoogle } = require("../user/google");
-const { confirmEmail } = require("../user/confirEmail");
-const { facebook } = require("../user/facebook");
+const { login, signup } = require("../controllers/init");
+const { confirmEmail } = require("../utils/init");
+const { gooogleAuuth } = require("../helpers/init");
+const { facebookAuth } = require("../helpers/init");
 
-//Middlewares
 const {
-  userSingupValidate,
-  messageValidate,
   emailValidate,
+  userSingupValidate,
   usernameValidate,
-} = require("../../../../middlewares/auth");
-
-const { uploads } = require("../../../../middlewares/img.upload");
+  messageValidate,
+  uploads,
+} = require("../middlewares/init");
 
 routes.post(
   "/signup",
@@ -30,12 +26,11 @@ routes.post(
   ],
   signup
 );
-
 routes.post("/login", login);
 
-routes.get("/confifrEmail/:token", confirmEmail);
+routes.get("/confirmEmail/:token", confirmEmail);
 
-routes.post("/google", oauthGoogle);
+routes.post("/google", gooogleAuuth.oauthGoogle);
 
 routes.get("/auth/facebook", passport.authenticate("facebook"));
 
@@ -46,7 +41,6 @@ routes.get(
     failureRedirect: "/fail",
   })
 );
-
 routes.get("/fail", (req, res) => {
   res.send("Failed attempt");
 });
@@ -57,4 +51,5 @@ routes.get("/home", (req, res) => {
     message: "success",
   });
 });
+
 module.exports = routes;

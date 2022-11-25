@@ -14,7 +14,7 @@ require("./config/config");
 dotenv.config();
 
 //Database
-require("./database");
+require("./database/mogodb.connect");
 
 //middlewares
 app.use(express.urlencoded({ extended: true }));
@@ -23,9 +23,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 app.use(passport.initialize());
-//routes
-app.use("/api", require("./controllers/V1/API/routes/user"));
-app.use("/api", require("./controllers/V1/API/routes/survey"));
 
-//exports Test
+//routes
+app.use("/api/v1", require("./routes/init").authenticationRoutes);
+app.use("/api/v1", require("./routes/init").surveyRoutes);
+
+//exports app
 module.exports = app;

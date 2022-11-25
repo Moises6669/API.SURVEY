@@ -1,6 +1,6 @@
-const { getTemplate, sendEmail } = require("../../../../services/Email");
-const { uploadProfileImage } = require("../../../../services/Cloudinary");
-const { generateToken } = require("../../../../services/Tokens");
+const { getTemplate, sendEmail } = require("../../../../helpers/init");
+const { uploadProfileImage } = require("../../../../helpers/init");
+const { generateToken} = require("../../../../helpers/Tokens");
 const User = require("../../../../models/user.models");
 const fs = require("fs-extra");
 
@@ -8,8 +8,7 @@ const signup = async (req, res) => {
   let body = req.body;
   let image = req.file.path;
 
-  try {
-    //upload image to Cloudinary
+  try { 
     const imageProfile = await uploadProfileImage(image);
 
     const user = new User({
@@ -27,7 +26,6 @@ const signup = async (req, res) => {
 
     await user.save();
 
-    //Delete images of the server
     fs.unlinkSync(req.file.path);
 
     res.status(201).json({

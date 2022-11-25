@@ -1,6 +1,7 @@
 const User = require("../../../../models/user.models");
-const { generateToken, verifyToken } = require("../../../../services/Tokens");
+const { generateToken } = require("../../../../helpers/Tokens");
 const bcryptjs = require("bcryptjs");
+
 const login = async (req, res) => {
   const { email, password } = req.body;
 

@@ -1,60 +1,63 @@
 const { Schema, model } = require("mongoose");
-const { enumPrivacity, enumTypeQuestion } = require('../utils/data/enums')
+const { enumPrivacity, enumTypeQuestion } = require("../utils/init");
 
 const SurveySchema = new Schema({
   created_by: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
+    ref: "User",
+    required: true,
   },
   author: {
     type: String,
-    required: true
+    required: true,
   },
   title: {
     type: String,
-    required: true
+    required: true,
   },
   description: { type: String, required: true },
-  questions: [{
-    name: String,
-    type: {
-      type: String,
-      enum: enumTypeQuestion
+  questions: [
+    {
+      name: String,
+      type: {
+        type: String,
+        enum: enumTypeQuestion,
+      },
+      options: [
+        {
+          value: String,
+          required: false,
+          rate: { type: Number, default: 0 },
+        },
+      ],
+      answers: {
+        type: Array,
+        required: false,
+      },
     },
-    options: [{
-      value: String,
-      required: false,
-      rate: { type: Number, default: 0, }
-    }],
-    answers: {
-      type: Array,
-      required: false
-    }
-  }],
+  ],
   answered_by: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
   },
   expired_at: {
-    type: Date
+    type: Date,
   },
   created_at: {
     type: Date,
-    default: Date.now()
+    default: Date.now(),
   },
   privacity: {
     type: String,
     enum: enumPrivacity,
-    default: 'public'
+    default: "public",
   },
   img: {
-    type: String
-  }
+    type: String,
+  },
 });
 
-
-SurveySchema.pre('save', function (next) {
+SurveySchema.pre("save", function (next) {
   let date = new Date();
   let day = date.getDate();
   date.setDate(day + 30);

@@ -2,8 +2,8 @@ const jwt = require("jsonwebtoken");
 
 verifyToken = (token) => {
   let data;
-
-  if (token) {
+  console.log("desde verify token ", token)
+  if (!token) {
     throw new Error("Se necesita el Token");
   }
 
