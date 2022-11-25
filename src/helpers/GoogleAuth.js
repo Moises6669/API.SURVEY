@@ -1,6 +1,7 @@
 const { OAuth2Client } = require("google-auth-library");
-const { Token } = require("../../../../services/Tokens");
-const User = require("../../../../models/user.models");
+const { generateToken } = require("../helpers/Tokens");
+const User = require("../models/user.models");
+
 const client = new OAuth2Client(
   "984513182957-u9vf98ap3hi74hg5p7maephj3vnvjf0v.apps.googleusercontent.com"
 );
@@ -35,7 +36,7 @@ const oauthGoogle = async (req, res) => {
     const findUser = await User.findOne({ email: googleUser.email });
 
     if (findUser) {
-      let token = new Token().generateToken(findUser, "5m");
+      let token = generateToken(findUser, "5m");
 
       return res.status(201).json({
         ok: true,
