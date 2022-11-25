@@ -7,9 +7,6 @@ const passport = require("passport");
 
 const app = express();
 
-//initialization
-require("./config/config");
-
 //settings
 dotenv.config();
 
